@@ -29,5 +29,5 @@ async function rodarAplicacao() {
   }
 }
 
-// Executa o script
+// Executa o script principal
 rodarAplicacao();
