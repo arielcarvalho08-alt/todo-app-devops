@@ -1,7 +1,5 @@
-```yaml
 name: Node.js CI
 
-# Gatilhos de disparo do pipeline
 on:
   push:
     branches: [ main ]
@@ -10,19 +8,19 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest # Cria uma máquina virtual Linux isolada na nuvem do GitHub
+    runs-on: ubuntu-latest
 
     steps:
     - name: 1. Baixar codigo do repositorio
       uses: actions/checkout@v4
 
-    - name: 2. Configurar o ambiente Node.js (Versao 20)
+    - name: 2. Configurar o ambiente Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '20'
         cache: 'npm'
 
-    - name: 3. Instalar dependencias (Build automatico)
+    - name: 3. Instalar dependencias
       run: npm install
 
     - name: 4. Executar os testes automatizados
