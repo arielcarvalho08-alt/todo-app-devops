@@ -1,21 +1,33 @@
-const { db } = require("\./database");
+// Importa as funções corretas e seguras do seu arquivo database.js
+const { adicionarTarefa, listarTarefas } = require('./database');
 
-function adicionarTarefa(titulo) {
-    return new Promise((resolve, reject) => {
-        db.run("INSERT INTO tarefas (titulo) VALUES (?)", [titulo], function(err) {
-            if (err) reject(err);
-            else resolve({id: this.lastID, titulo, concluida: 0});
-        });
-    });
+/**
+ * Insere uma nova tarefa utilizando a estrutura atualizada do Turso.
+ * @param {string} titulo - O nome da tarefa
+ */
+async function adicionarTarefaService(titulo) {
+    try {
+        await adicionarTarefa(titulo);
+        // Retorna a estrutura que o resto do seu app espera receber
+        return { id: Date.now(), titulo, concluida: 0 };
+    } catch (err) {
+        throw err;
+    }
 }
 
-function listarTarefas() {
-    return new Promise((resolve, reject) => {
-        db.all("SELECT * FROM tarefas", [], (err, rows) => {
-            if (err) reject(err);
-            else resolve(rows);
-        });
-    });
+/**
+ * Busca todas as tarefas utilizando a estrutura atualizada do Turso.
+ */
+async function listarTarefasService() {
+    try {
+        const rows = await listarTarefas();
+        return rows;
+    } catch (err) {
+        throw err;
+    }
 }
 
-module.exports = { adicionarTarefa, listarTarefas };
+module.exports = { 
+    adicionarTarefa: adicionarTarefaService, 
+    listarTarefas: listarTarefasService 
+};
