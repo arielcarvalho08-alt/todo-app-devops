@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/arielcarvalho08-alt/todo-app-devops#readme",
   "dependencies": {
+    "@libsql/client": "^0.17.4",
+    "dotenv": "^17.4.2",
     "sqlite3": "^6.0.1"
   },
   "devDependencies": {
