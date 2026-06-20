@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "test": "jest"
-  },
+  "start": "node src/index.js",
+  "test": "jest"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/arielcarvalho08-alt/todo-app-devops.git"
