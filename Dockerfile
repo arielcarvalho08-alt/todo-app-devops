@@ -4,11 +4,13 @@ WORKDIR /app
 
 COPY package*.json ./
 
-# Instalação limpa e rápida, sem compilações nativas pesadas
 RUN npm install
 
+# Copia a estrutura de código e a nova pasta pública do frontend
 COPY src/ ./src
+COPY public/ ./public
 
 ENV NODE_ENV=production
 
 CMD ["npm", "start"]
+

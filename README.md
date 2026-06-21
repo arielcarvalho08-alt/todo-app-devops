@@ -1,29 +1,21 @@
 Markdown
-# Gerenciador de Tarefas - Projeto Final DevOps (IFCE)
+# Todo-App Pro — Finalização do Pipeline e Entrega Contínua (CD)
 
-Sistema simplificado de gerenciamento de tarefas ("ToDo App") projetado para demonstrar na prática fluxos de trabalho ágeis, conteinerização e automação de deploys.
+Entrega oficial do **Checkpoint 3** da disciplina de DevOps — **IFCE Campus Fortaleza**.
 
-## Equipe
-* **Francisco Ariel Carvalho da Silva** - Software e Database 
-* **Maria Clara Vasconcelos de Sousa** - DevOps e Infra 
-* **Alana Marques Pinheiro** - Tech Lead e QA Documenter
+##  Equipe
+* **Integrante 1:** Francisco Ariel Carvalho da Silva
+* **Integrante 2:** Maria Clara Vasconcelos de Sousa
+* **Integrante 3:** Alana Marques Pinheiro
 
-## Tecnologias e Recursos Aplicados
-* **Runtime:** Node.js (JavaScript)
-* **Banco de Dados :** SQLite para persistência simples local e em container.
-* **Conteinerização:** Docker para isolamento e portabilidade da aplicação.
-* **Gerenciamento de Versão:** Git com fluxo baseado em Branches organizadas e Pull Requests.
+##  Arquitetura e Ecossistema DevOps
+Esta aplicação adota uma estratégia moderna e escalável de desenvolvimento:
+* **Backend & API:** Node.js com framework Express.
+* **Frontend:** Interface fluida construída em Vanilla JavaScript.
+* **Persistência Externa:** Cluster remoto em nuvem **Turso (Edge Database via HTTP/WebSockets)**.
+* **CI/CD Automatizado:** GitHub Actions gerenciando compilação, testes e build de artefatos.
+* **Deploy Automatizado:** Infraestrutura gerenciada via GitOps na nuvem pública do **Render**.
 
-## Fluxo de Branches Adotado
-* `main`: Filial estável com o código revisado e pronto para apresentação.
-* `feature/*`: Branches temporárias usadas por cada integrante para o desenvolvimento de recursos específicos.
+##  Link de Produção
+Acesse a aplicação online hospedada na nuvem: https://todo-app-devops-ifce.onrender.com
 
-## Execução Local com Docker e Volumes 
-Para rodar a aplicação localmente garantindo que os dados fiquem salvos mesmo após parar o container:
-
-```bash
-# 1. Construir a imagem Docker
-docker build -t todo-app .
-
-# 2. Executar o container acoplando o volume de dados local
-docker run -v ./dados:/dados todo-app
