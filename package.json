@@ -21,7 +21,8 @@
   "homepage": "https://github.com/arielcarvalho08-alt/todo-app-devops#readme",
   "dependencies": {
     "@libsql/client": "^0.17.4",
-    "dotenv": "^17.4.2"
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
   },
   "devDependencies": {
     "jest": "^30.4.2"
