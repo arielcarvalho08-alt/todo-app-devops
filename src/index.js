@@ -1,33 +1,42 @@
+require('dotenv').config();
+const express = require('express');
+const path = require('path');
 const { inicializarBanco, adicionarTarefa, listarTarefas } = require('./database');
 
-async function rodarAplicacao() {
-  console.log("\n=========================================");
-  console.log("🚀 INICIANDO TESTE DO TODO-APP (DEVOPS) ");
-  console.log("=========================================\n");
+const app = express();
+const PORT = process.env.PORT || 3000;
 
+app.use(express.json());
+app.use(express.static(path.join(__dirname, '../public')));
+
+app.get('/api/tarefas', async (req, res) => {
   try {
-    // 1. Garante que a estrutura do banco na nuvem existe
-    await inicializarBanco();
-    
-    // 2. Adiciona uma tarefa dinamicamente para mostrar que o INSERT funciona
-    const timestamp = new Date().toLocaleTimeString();
-    await adicionarTarefa(`Apresentar Checkpoint 2 às ${timestamp}`);
-    
-    // 3. Consulta o banco na nuvem e puxa a lista atualizada
     const tarefas = await listarTarefas();
-    
-    console.log("\n📥 === LISTA DE TAREFAS ATUAIS (DIRETO DA NUVEM) ===");
-    console.log(JSON.stringify(tarefas, null, 2));
-    console.log("====================================================\n");
-    
-    console.log("🎉 Teste executado com sucesso! Conexão 100% funcional.");
-    
+    res.json(tarefas);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  } 
+});
+
+app.post('/api/tarefas', async (req, res) => {
+  try {
+    const { titulo } = req.body;
+    await adicionarTarefa(titulo);
+    res.status(201).json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+async function iniciarServidor() {
+  try {
+    await inicializarBanco();
+    app.listen(PORT, () => {
+      console.log(`🚀 Servidor Express HTTP ativo na porta ${PORT}`);
+    });
   } catch (erro) {
-    console.error("\n❌ Ocorreu um erro crítico durante a execução:");
-    console.error(erro.message);
-    console.error("====================================================\n");
+    console.error("Falha crítica ao iniciar o servidor:", erro.message);
   }
 }
 
-// Executa o script principal
-rodarAplicacao();
+iniciarServidor();
