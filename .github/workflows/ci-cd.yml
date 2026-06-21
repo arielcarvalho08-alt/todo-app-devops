@@ -1,0 +1,49 @@
+name: Pipeline Completo de CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  ci-testes:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 1. Clonar Repositório
+      uses: actions/checkout@v3
+
+    - name: 2. Configurar Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: 3. Build Automático (Dependências)
+      run: npm install
+
+    - name: 4. Executar Testes Automatizados
+      run: npm test
+
+  cd-deploy:
+    needs: ci-testes
+    runs-on: ubuntu-latest
+    steps:
+    - name: 1. Clonar Repositório
+      uses: actions/checkout@v3
+    
+    - name: 2. Autenticar no GitHub Container Registry (GHCR)
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: 3. Compilar e Publicar Imagem Docker
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        push: true
+        tags: |
+          ghcr.io/${{ github.repository }}:latest
