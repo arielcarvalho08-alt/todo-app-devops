@@ -67,5 +67,21 @@ async function listarTarefas() {
   return resultado.rows;
 }
 
+
+/**
+ * Marca uma tarefa como concluída no banco de dados Turso.
+ * @param {number} id - O ID da tarefa a ser marcada como concluída
+ */
+async function concluirTarefa(id) {
+  if (!client) return console.log(`ℹ️ Conexão com o banco ausente. Simulando conclusão da tarefa de ID ${id}.`);
+
+  console.log(`✔️ Marcando tarefa de ID ${id} como concluída...`);
+  await client.execute({
+    sql: "UPDATE tarefas SET concluida = 1 WHERE id = ?",
+    args: [id]
+  });
+  console.log("✅ Tarefa marcada como concluída na nuvem!");
+}
+
 // Exporta as funções para que o arquivo index.js consiga utilizá-las
-module.exports = { inicializarBanco, adicionarTarefa, listarTarefas };
+module.exports = { inicializarBanco, adicionarTarefa, listarTarefas, concluirTarefa };
