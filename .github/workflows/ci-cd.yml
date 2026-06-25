@@ -47,3 +47,6 @@ jobs:
         push: true
         tags: |
           ghcr.io/${{ github.repository }}:latest
+    - name: Disparar Deploy Automático no Render
+      run: |
+          curl -X POST "https://api.render.com/deploy/srv-d8r95iojs32c73bp8s6g?key=QnWk3cz0sjQ"
