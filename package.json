@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "test": "jest"
+    "test": "jest tests/tarefas.test.js"
   },
   "repository": {
     "type": "git",
