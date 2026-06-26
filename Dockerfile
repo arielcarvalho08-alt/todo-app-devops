@@ -4,13 +4,13 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm install --only=production
 
 # Copia a estrutura de código e a nova pasta pública do frontend
-COPY src/ ./src
-COPY public/ ./public
+COPY src/ ./src/
+COPY public/ ./public/
 
-ENV NODE_ENV=production
+EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["node", "src/index.js"]
 
